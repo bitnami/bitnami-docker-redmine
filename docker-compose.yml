@@ -1,26 +1,22 @@
 version: '2'
 
+volumes:
+  mariadb-data:
+    driver: local
+  redmine-data:
+    driver: local
+
 services:
   mariadb:
     image: bitnami/mariadb:latest
-    volumes_from:
-      - mariadb_data
-
-  mariadb_data:
-    image: bitnami/mariadb:latest
-    entrypoint: 'true'
+    volumes:
+      - mariadb-data:/bitnami/mariadb/data
 
   application:
     image: bitnami/redmine:latest
     ports:
       - 80:3000
-    volumes_from:
-      - application_data
+    volumes:
+      - redmine-data:/bitnami/redmine
     depends_on:
       - mariadb
-
-  application_data:
-    image: bitnami/redmine:latest
-    volumes:
-      - /bitnami/redmine
-    entrypoint: 'true'
