@@ -6,26 +6,26 @@ machine:
     LATEST_STABLE: 3
     IMAGE_NAME: redmine
     CHART_NAME: redmine
-    CHART_REPO: https://github.com/kubernetes/charts
-    DOCKER_PROJECT: bitnami
-    GCLOUD_PROJECT: bitnami-containers
+    CHART_REPO: https://github.com/damagehead/charts
+    DOCKER_PROJECT: experimental
+    GCLOUD_PROJECT:
 
 dependencies:
   override:
   - docker info
   - gcloud version
-  - curl -sL https://raw.githubusercontent.com/bitnami/test-infra/master/circle/docker-pull-cache.sh | bash -
+  - curl -sL https://raw.githubusercontent.com/sameersbn/test-infra/master/circle/docker-pull-cache.sh | bash -
 
 test:
   override:
-  - curl -sL https://raw.githubusercontent.com/bitnami/test-infra/master/circle/docker-image-test.sh | bash -
+  - curl -sL https://raw.githubusercontent.com/sameersbn/test-infra/master/circle/docker-image-test.sh | bash -
 
 deployment:
   cache:
     branch: master
     commands:
-    - curl -sL https://raw.githubusercontent.com/bitnami/test-infra/master/circle/docker-update-cache.sh | bash -
+    - curl -sL https://raw.githubusercontent.com/sameersbn/test-infra/master/circle/docker-update-cache.sh | bash -
   release:
     tag: /^[0-9].*-r[0-9]+$/
     commands:
-    - curl -sL https://raw.githubusercontent.com/bitnami/test-infra/master/circle/docker-release-image.sh | bash -
+    - curl -sL https://raw.githubusercontent.com/sameersbn/test-infra/master/circle/docker-release-image.sh | bash -
